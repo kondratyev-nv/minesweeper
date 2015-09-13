@@ -1,63 +1,66 @@
 <html>
-    <head>
-        <title>Minesweeper</title>
-        <!-- Bootstrap -->
-        <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet">  
-        <!-- Custom styles for this project -->
-        <link href="./css/styles.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
-        
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Minesweeper</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">About</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
 
-            <div id="gameOverModal" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-sm">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Game over!</h4>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="restart">Restart</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<head>
+  <title>Minesweeper</title>
+  <!-- Bootstrap -->
+  <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this project -->
+  <link href="./css/styles.css" rel="stylesheet">
+</head>
 
-            <div align="center">
-                <canvas id="snake-canvas" width="600" height="600">
-                    Sorry, your browser doesn't support the &lt;canvas&gt; element.
-                </canvas>
-            </div>
+<body>
+  <div class="container">
 
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Minesweeper</a>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery-2.1.4.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/application/WaitingDialog.js"></script>
-        <script src="js/application/Event.js"></script>
-        <script src="js/application/Minesweeper.js"></script>
-    </body>
+    <div id="gameOverModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Game over!</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" id="restart">Restart</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div align="center">
+      <canvas id="snake-canvas" width="600" height="600">
+        Sorry, your browser doesn't support the &lt;canvas&gt; element.
+      </canvas>
+    </div>
+
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="js/jquery-2.1.4.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/application/Utilities.js"></script>
+  <script src="js/application/Minesweeper.js"></script>
+  <script src="js/application/Application.js"></script>
+</body>
+
 </html>
