@@ -12,6 +12,13 @@ function Minesweeper(w, h, n) {
       this.map[i][j] = 0;
     }
   }
+  this.marks = [];
+  for (var i = 0; i < w; ++i) {
+    this.marks[i] = [];
+    for (var j = 0; j < h; ++j) {
+      this.marks[i][j] = 0;
+    }
+  }
   this.generate();
 }
 
@@ -25,6 +32,27 @@ Minesweeper.prototype.get = function(x, y) {
 
 Minesweeper.prototype.try = function(x, y) {
   return this.get(x, y) === -1;
+};
+
+Minesweeper.prototype.mark = function(x, y) {
+  if (0 <= x && x < this.w && 0 <= y && y < this.h) {
+    return this.mark[x][y] = 1;
+  }
+};
+
+Minesweeper.prototype.is_complete = function() {
+  var count = 0;
+  for (var i = 0; i < w; ++i) {
+    for (var j = 0; j < h; ++j) {
+      if (this.marks[i][j] === 1) {
+        count++;
+        if (this.map[i][j] !== -1) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
 };
 
 Minesweeper.prototype.increment = function(x, y) {

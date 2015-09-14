@@ -14,12 +14,10 @@ drawMesh(ctx, canvas.width, canvas.height, (canvas.width / nx), (canvas.height /
 function drawMesh(ctx, w, h, hx, hy) {
   for (var x = 0; x <= w; x += hx) {
     ctx.moveTo(x, 0);
-    ctx.fillText(x / hx, x, 10);
     ctx.lineTo(x, h);
   }
   for (var y = 0; y <= h; y += hy) {
     ctx.moveTo(0, y);
-    ctx.fillText(y / hy, 0, y + 10);
     ctx.lineTo(w, y);
   }
   ctx.stroke();
@@ -30,9 +28,10 @@ function fillTile(tile) {
   if (minesweeper.try(tile.x, tile.y) === true) {
     ctx.fillStyle = "red";
     ctx.fillRect(p.x, p.y, p.w, p.h);
+  } else {
+    ctx.fillStyle = "#7bcc72";
+    ctx.fillText(minesweeper.get(tile.x, tile.y), p.x + p.w / 2, p.y + p.h / 2);
   }
-  ctx.fillStyle = "black";
-  ctx.fillText(minesweeper.get(tile.x, tile.y), p.x + p.w / 2, p.y + p.h / 2);
   ctx.stroke();
 }
 
