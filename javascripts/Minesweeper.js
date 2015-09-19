@@ -51,6 +51,7 @@ Minesweeper.prototype.open = function(x, y) {
         });
       }
     }
+    this.is_complete();
   }
 };
 
@@ -63,6 +64,10 @@ Minesweeper.prototype.on_tile_open = function(x, y, value) {
 Minesweeper.prototype.on_tile_mark = function(x, y) {
 };
 
+Minesweeper.prototype.on_win = function() {
+};
+
+
 Minesweeper.prototype.mark = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h) {
     if (this.map[x][y].marked === true || this.map[x][y].opened === true) {
@@ -70,22 +75,30 @@ Minesweeper.prototype.mark = function(x, y) {
     }
     this.map[x][y].mark();
     this.on_tile_mark(x, y);
+    this.is_complete();
   }
 };
 
 Minesweeper.prototype.is_complete = function() {
-  var count = 0;
-  for (var i = 0; i < w; ++i) {
-    for (var j = 0; j < h; ++j) {
+  var markCount = 0;
+  var openCount = 0;
+  for (var i = 0; i < this.w; ++i) {
+    for (var j = 0; j < this.h; ++j) {
       if (this.map[i][j].marked === true) {
-        count++;
+        markCount++;
         if (this.map[i][j].value !== -1) {
-          return false;
+          return;
         }
+      }
+      if (this.map[i][j].opened === true) {
+        openCount++;
       }
     }
   }
-  return true;
+  if(markCount === this.n &&
+     openCount === this.w * this.h - this.n) {
+    this.on_win();
+  }
 };
 
 Minesweeper.prototype.increment = function(x, y) {
