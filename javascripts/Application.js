@@ -12,6 +12,7 @@ var minesweeper = new Minesweeper(nx, ny, 10);
 drawMesh(ctx, canvas.width, canvas.height, (canvas.width / nx), (canvas.height / ny));
 
 function drawMesh(ctx, w, h, hx, hy) {
+  ctx.strokeStyle = "#b5e853";
   for (var x = 0; x <= w; x += hx) {
     ctx.moveTo(x, 0);
     ctx.lineTo(x, h);
@@ -29,7 +30,7 @@ function fillTile(tile) {
     ctx.fillStyle = "red";
     ctx.fillRect(p.x, p.y, p.w, p.h);
   } else {
-    ctx.fillStyle = "#7bcc72";
+    ctx.fillStyle = "#b5e853";
     ctx.fillText(minesweeper.get(tile.x, tile.y), p.x + p.w / 2, p.y + p.h / 2);
   }
   ctx.stroke();
