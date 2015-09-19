@@ -27,15 +27,28 @@ function Minesweeper(w, h, n) {
       this.map[i][j] = new Tile();
     }
   }
+  this.shifts = [[-1,-1],[-1,0],[-1,1],
+                 [0,-1],[0,1],
+                 [1,-1],[1,0],[1,1]];
   this.generate();
 }
 
 Minesweeper.prototype.open = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h) {
-    if(this.map[x][y].open() === -1) {
+    if (this.map[x][y].opened === true) {
+      return;
+    }
+    var value = this.map[x][y].open();
+    if(value === -1) {
       this.on_mine_open(x, y);
     } else {
-      this.on_tile_open(x, y, this.map[x][y].value);
+      this.on_tile_open(x, y, value);
+      if (value === 0) {
+        var self = this;
+        this.shifts.forEach(function(shift) {
+          self.open(x + shift[0], y + shift[1]);
+        });
+      }
     }
   }
 };
@@ -76,16 +89,10 @@ Minesweeper.prototype.increment = function(x, y) {
 Minesweeper.prototype.place = function(x, y) {
   this.map[x][y].value = -1;
 
-  this.increment(x - 1, y - 1);
-  this.increment(x - 1, y);
-  this.increment(x - 1, y + 1);
-
-  this.increment(x, y - 1);
-  this.increment(x, y + 1);
-
-  this.increment(x + 1, y + 1);
-  this.increment(x + 1, y);
-  this.increment(x + 1, y - 1);
+  var self = this;
+  this.shifts.forEach(function(shift) {
+    self.increment(x + shift[0], y + shift[1]);
+  });
 };
 
 Minesweeper.prototype.generate = function() {
