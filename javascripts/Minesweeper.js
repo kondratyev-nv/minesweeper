@@ -36,6 +36,7 @@ function Minesweeper(w, h, n) {
                  [0,-1],[0,1],
                  [1,-1],[1,0],[1,1]];
   this.generate();
+  this.marksLeft = n;
 }
 
 Minesweeper.prototype.open = function(x, y) {
@@ -74,6 +75,10 @@ Minesweeper.prototype.on_tile_unmark = function(x, y) {
 Minesweeper.prototype.on_win = function() {
 };
 
+Minesweeper.prototype.getMarkInfo = function() {
+  return { left: this.marksLeft, total: this.n };
+};
+
 
 Minesweeper.prototype.mark = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h) {
@@ -82,33 +87,33 @@ Minesweeper.prototype.mark = function(x, y) {
     }
     if(this.map[x][y].marked === true) {
       this.map[x][y].unmark();
+      this.marksLeft += 1;
       this.on_tile_unmark(x, y);
-    } else {
+    } else if (this.marksLeft > 0){
       this.map[x][y].mark();
+      this.marksLeft -= 1;
       this.on_tile_mark(x, y);
-      this.is_complete();  
+      this.is_complete();
     }
   }
 };
 
 Minesweeper.prototype.is_complete = function() {
-  var markCount = 0;
+  if (this.marksLeft !== 0){
+    return;
+  }
   var openCount = 0;
   for (var i = 0; i < this.w; ++i) {
     for (var j = 0; j < this.h; ++j) {
-      if (this.map[i][j].marked === true) {
-        markCount++;
-        if (this.map[i][j].value !== -1) {
-          return;
-        }
+      if (this.map[i][j].marked === true && this.map[i][j].value !== -1) {
+        return;
       }
       if (this.map[i][j].opened === true) {
         openCount++;
       }
     }
   }
-  if(markCount === this.n &&
-     openCount === this.w * this.h - this.n) {
+  if(openCount === this.w * this.h - this.n) {
     this.on_win();
   }
 };
