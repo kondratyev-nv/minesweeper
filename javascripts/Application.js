@@ -1,7 +1,7 @@
 
 'use strict';
 
-var canvas = document.getElementById('snake-canvas');
+var canvas = document.getElementById('minesweeper-canvas');
 var ctx = canvas.getContext('2d');
 canvas.addEventListener('click', openTile, false);
 canvas.addEventListener('contextmenu', function (e) {
