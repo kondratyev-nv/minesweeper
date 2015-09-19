@@ -36,6 +36,9 @@ function fillMineTile(x, y) {
 function fillSimpleTile(x, y, value) {
   var p = getPosition(x, y);
   ctx.fillStyle = "#b5e853";
+  ctx.font = "20pt Lucida Console";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
   ctx.fillText(value, p.x + p.w / 2, p.y + p.h / 2);
   ctx.stroke();
 }
