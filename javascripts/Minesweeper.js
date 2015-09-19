@@ -1,26 +1,6 @@
 
 'use strict';
 
-function Tile() {
-  this.value  = 0;
-  this.marked = false;
-  this.opened = false;
-}
-
-Tile.prototype.open = function() {
-  this.marked = false;
-  this.opened = true;
-  return this.value;
-}
-
-Tile.prototype.mark = function() {
-  this.marked = true;
-}
-
-Tile.prototype.unmark = function() {
-  this.marked = false;
-}
-
 function Minesweeper(w, h, n) {
   this.w = w;
   this.h = h;
@@ -32,23 +12,51 @@ function Minesweeper(w, h, n) {
       this.map[i][j] = new Tile();
     }
   }
-  this.shifts = [[-1,-1],[-1,0],[-1,1],
-                 [0,-1],[0,1],
-                 [1,-1],[1,0],[1,1]];
+  this.shifts = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1]
+  ];
   this.generate();
   this.marksLeft = n;
 }
 
+Minesweeper.prototype.onMineFound = function(x, y) {};
+
+Minesweeper.prototype.onTileOpened = function(x, y, value) {};
+
+Minesweeper.prototype.onMarkTile = function(x, y) {};
+
+Minesweeper.prototype.onUnmarkTile = function(x, y) {};
+
+Minesweeper.prototype.onWin = function() {};
+
+Minesweeper.prototype.getMarkInfo = function() {
+  return {
+    left: this.marksLeft,
+    total: this.n
+  };
+};
+
+Minesweeper.prototype.canOpen = function(x, y) {
+    return 0 <= x && x < this.w && 0 <= y && y < this.h;
+}
+
 Minesweeper.prototype.open = function(x, y) {
-  if (0 <= x && x < this.w && 0 <= y && y < this.h) {
+  if (this.canOpen(x, y)) {
     if (this.map[x][y].opened === true) {
       return;
     }
     var value = this.map[x][y].open();
-    if(value === -1) {
-      this.on_mine_open(x, y);
+    if (value === -1) {
+      this.onMineFound(x, y);
     } else {
-      this.on_tile_open(x, y, value);
+      this.onTileOpened(x, y, value);
       if (value === 0) {
         var self = this;
         this.shifts.forEach(function(shift) {
@@ -56,50 +64,30 @@ Minesweeper.prototype.open = function(x, y) {
         });
       }
     }
-    this.is_complete();
+    this.checkComplete();
   }
 };
 
-Minesweeper.prototype.on_mine_open = function(x, y) {
-};
-
-Minesweeper.prototype.on_tile_open = function(x, y, value) {
-};
-
-Minesweeper.prototype.on_tile_mark = function(x, y) {
-};
-
-Minesweeper.prototype.on_tile_unmark = function(x, y) {
-};
-
-Minesweeper.prototype.on_win = function() {
-};
-
-Minesweeper.prototype.getMarkInfo = function() {
-  return { left: this.marksLeft, total: this.n };
-};
-
-
-Minesweeper.prototype.mark = function(x, y) {
-  if (0 <= x && x < this.w && 0 <= y && y < this.h) {
+Minesweeper.prototype.toogleMark = function(x, y) {
+  if (this.canOpen(x, y)) {
     if (this.map[x][y].opened === true) {
       return;
     }
-    if(this.map[x][y].marked === true) {
+    if (this.map[x][y].marked === true) {
       this.map[x][y].unmark();
       this.marksLeft += 1;
-      this.on_tile_unmark(x, y);
-    } else if (this.marksLeft > 0){
+      this.onUnmarkTile(x, y);
+    } else if (this.marksLeft > 0) {
       this.map[x][y].mark();
       this.marksLeft -= 1;
-      this.on_tile_mark(x, y);
-      this.is_complete();
+      this.onMarkTile(x, y);
+      this.checkComplete();
     }
   }
 };
 
-Minesweeper.prototype.is_complete = function() {
-  if (this.marksLeft !== 0){
+Minesweeper.prototype.checkComplete = function() {
+  if (this.marksLeft !== 0) {
     return;
   }
   var openCount = 0;
@@ -113,13 +101,13 @@ Minesweeper.prototype.is_complete = function() {
       }
     }
   }
-  if(openCount === this.w * this.h - this.n) {
-    this.on_win();
+  if (openCount === this.w * this.h - this.n) {
+    this.onWin();
   }
 };
 
 Minesweeper.prototype.increment = function(x, y) {
-  if (0 <= x && x < this.w && 0 <= y && y < this.h && this.map[x][y].value !== -1) {
+  if (this.canOpen(x, y) && this.map[x][y].value !== -1) {
     this.map[x][y].value += 1;
   }
 };
@@ -135,10 +123,10 @@ Minesweeper.prototype.place = function(x, y) {
 
 Minesweeper.prototype.generate = function() {
   var i = 0;
-  while(i < this.n) {
+  while (i < this.n) {
     var x = getRandomInteger(0, this.w);
     var y = getRandomInteger(0, this.h);
-    if(this.map[x][y].value !== -1) {
+    if (this.map[x][y].value !== -1) {
       this.place(x, y);
       i += 1;
     }
