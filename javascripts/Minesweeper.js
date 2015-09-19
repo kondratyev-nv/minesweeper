@@ -22,16 +22,20 @@ function Minesweeper(w, h, n) {
   this.generate();
 }
 
-Minesweeper.prototype.get = function(x, y) {
+Minesweeper.prototype.open = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h) {
-    return this.map[x][y];
-  } else {
-    return undefined;
+    if(this.map[x][y] === -1) {
+      this.on_mine_open(x, y);
+    } else {
+      this.on_tile_open(x, y, this.map[x][y]);
+    }
   }
 };
 
-Minesweeper.prototype.try = function(x, y) {
-  return this.get(x, y) === -1;
+Minesweeper.prototype.on_mine_open = function(x, y) {
+};
+
+Minesweeper.prototype.on_tile_open = function(x, y, value) {
 };
 
 Minesweeper.prototype.mark = function(x, y) {

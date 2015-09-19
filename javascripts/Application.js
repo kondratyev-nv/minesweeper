@@ -9,6 +9,8 @@ var ch = canvas.clientHeight;
 var nx = 10;
 var ny = 10;
 var minesweeper = new Minesweeper(nx, ny, 10);
+minesweeper.on_tile_open = fillSimpleTile;
+minesweeper.on_mine_open = fillMineTile;
 drawMesh(ctx, canvas.width, canvas.height, (canvas.width / nx), (canvas.height / ny));
 
 function drawMesh(ctx, w, h, hx, hy) {
@@ -24,15 +26,17 @@ function drawMesh(ctx, w, h, hx, hy) {
   ctx.stroke();
 }
 
-function fillTile(tile) {
-  var p = getPosition(tile.x, tile.y);
-  if (minesweeper.try(tile.x, tile.y) === true) {
-    ctx.fillStyle = "red";
-    ctx.fillRect(p.x, p.y, p.w, p.h);
-  } else {
-    ctx.fillStyle = "#b5e853";
-    ctx.fillText(minesweeper.get(tile.x, tile.y), p.x + p.w / 2, p.y + p.h / 2);
-  }
+function fillMineTile(x, y) {
+  var p = getPosition(x, y);
+  ctx.fillStyle = "red";
+  ctx.fillRect(p.x, p.y, p.w, p.h);
+  ctx.stroke();
+}
+
+function fillSimpleTile(x, y, value) {
+  var p = getPosition(x, y);
+  ctx.fillStyle = "#b5e853";
+  ctx.fillText(value, p.x + p.w / 2, p.y + p.h / 2);
   ctx.stroke();
 }
 
@@ -45,9 +49,9 @@ function getTile(x, y) {
 
 function onClick(event) {
   var x = event.offsetX,
-    y = event.offsetY;
+      y = event.offsetY;
   var tile = getTile(x, y);
-  fillTile(tile);
+  minesweeper.open(tile.x, tile.y);
 }
 
 function getPosition(x, y) {
