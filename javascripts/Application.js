@@ -3,7 +3,11 @@
 
 var canvas = document.getElementById('snake-canvas');
 var ctx = canvas.getContext('2d');
-canvas.addEventListener('click', onClick, false);
+canvas.addEventListener('click', openTile, false);
+canvas.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+    markTile(e);
+});
 var cw = canvas.clientWidth;
 var ch = canvas.clientHeight;
 var nx = 10;
@@ -11,6 +15,7 @@ var ny = 10;
 var minesweeper = new Minesweeper(nx, ny, 10);
 minesweeper.on_tile_open = fillSimpleTile;
 minesweeper.on_mine_open = fillMineTile;
+minesweeper.on_tile_mark = markSimpleTile;
 drawMesh(ctx, canvas.width, canvas.height, (canvas.width / nx), (canvas.height / ny));
 
 function drawMesh(ctx, w, h, hx, hy) {
@@ -29,6 +34,7 @@ function drawMesh(ctx, w, h, hx, hy) {
 function fillMineTile(x, y) {
   var p = getPosition(x, y);
   ctx.fillStyle = "red";
+  ctx.clearRect(p.x, p.y, p.w, p.h);
   ctx.fillRect(p.x, p.y, p.w, p.h);
   ctx.stroke();
 }
@@ -39,7 +45,19 @@ function fillSimpleTile(x, y, value) {
   ctx.font = "20pt Lucida Console";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
+  ctx.clearRect(p.x, p.y, p.w, p.h);
   ctx.fillText(value, p.x + p.w / 2, p.y + p.h / 2);
+  ctx.stroke();
+}
+
+function markSimpleTile(x, y) {
+  var p = getPosition(x, y);
+  ctx.fillStyle = "#b5e853";
+  ctx.font = "20pt Lucida Console";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.clearRect(p.x, p.y, p.w, p.h);
+  ctx.fillText("M", p.x + p.w / 2, p.y + p.h / 2);
   ctx.stroke();
 }
 
@@ -50,11 +68,18 @@ function getTile(x, y) {
   };
 }
 
-function onClick(event) {
+function openTile(event) {
   var x = event.offsetX,
       y = event.offsetY;
   var tile = getTile(x, y);
   minesweeper.open(tile.x, tile.y);
+}
+
+function markTile(event) {
+  var x = event.offsetX,
+      y = event.offsetY;
+  var tile = getTile(x, y);
+  minesweeper.mark(tile.x, tile.y);
 }
 
 function getPosition(x, y) {

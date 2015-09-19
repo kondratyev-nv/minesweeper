@@ -8,6 +8,7 @@ function Tile() {
 }
 
 Tile.prototype.open = function() {
+  this.marked = false;
   this.opened = true;
   return this.value;
 }
@@ -59,9 +60,16 @@ Minesweeper.prototype.on_mine_open = function(x, y) {
 Minesweeper.prototype.on_tile_open = function(x, y, value) {
 };
 
+Minesweeper.prototype.on_tile_mark = function(x, y) {
+};
+
 Minesweeper.prototype.mark = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h) {
+    if (this.map[x][y].marked === true || this.map[x][y].opened === true) {
+      return;
+    }
     this.map[x][y].mark();
+    this.on_tile_mark(x, y);
   }
 };
 
