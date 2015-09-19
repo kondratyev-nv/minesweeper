@@ -3,15 +3,11 @@
 
 var canvas = document.getElementById('minesweeper-canvas');
 var ctx = canvas.getContext('2d');
-canvas.addEventListener('click', openTile, false);
-canvas.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-  markTile(e);
-});
 var cw = canvas.clientWidth;
 var ch = canvas.clientHeight;
 var nx = 10;
 var ny = 10;
+var controller = new MouseControlHandler(canvas, nx, ny);
 var minesweeper = new Minesweeper(nx, ny, 10);
 minesweeper.onTileOpened = onTileOpened;
 minesweeper.onMineFound = onMineFound;
@@ -20,6 +16,10 @@ minesweeper.onUnmarkTile = onUnmarkTile;
 minesweeper.onWin = function() {
   showMessage("You won!");
 };
+
+controller.openTile.add(minesweeper.open, minesweeper);
+controller.markTile.add(minesweeper.toogleMark, minesweeper);
+
 drawMesh(ctx, canvas.width, canvas.height, (canvas.width / nx), (canvas.height / ny));
 
 function showMessage(message) {
@@ -83,27 +83,6 @@ function onUnmarkTile(x, y) {
   ctx.clearRect(p.x, p.y, p.w, p.h);
   ctx.stroke();
   showMarkInfo();
-}
-
-function getTile(x, y) {
-  return {
-    x: (nx * x / cw) | 0,
-    y: (ny * y / ch) | 0
-  };
-}
-
-function openTile(event) {
-  var x = event.offsetX;
-  var y = event.offsetY;
-  var tile = getTile(x, y);
-  minesweeper.open(tile.x, tile.y);
-}
-
-function markTile(event) {
-  var x = event.offsetX;
-  var y = event.offsetY;
-  var tile = getTile(x, y);
-  minesweeper.toogleMark(tile.x, tile.y);
 }
 
 function getPosition(x, y) {
