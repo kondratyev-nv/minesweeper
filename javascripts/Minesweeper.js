@@ -68,7 +68,7 @@ Minesweeper.prototype.is_complete = function() {
 };
 
 Minesweeper.prototype.increment = function(x, y) {
-  if (0 <= x && x < this.w && 0 <= y && y < this.h && this.map[x][y] !== -1) {
+  if (0 <= x && x < this.w && 0 <= y && y < this.h && this.map[x][y].value !== -1) {
     this.map[x][y].value += 1;
   }
 };
