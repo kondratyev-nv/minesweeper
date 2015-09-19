@@ -58,27 +58,32 @@ Minesweeper.prototype.is_complete = function() {
 Minesweeper.prototype.increment = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h && this.map[x][y] !== -1) {
     this.map[x][y] += 1;
-  } else {
-    return;
   }
 };
 
 Minesweeper.prototype.place = function(x, y) {
   this.map[x][y] = -1;
+
   this.increment(x - 1, y - 1);
   this.increment(x - 1, y);
+  this.increment(x - 1, y + 1);
+
+  this.increment(x, y - 1);
+  this.increment(x, y + 1);
+
   this.increment(x + 1, y + 1);
   this.increment(x + 1, y);
   this.increment(x + 1, y - 1);
-  this.increment(x, y - 1);
-  this.increment(x - 1, y + 1);
-  this.increment(x, y + 1);
 };
 
 Minesweeper.prototype.generate = function() {
-  for (var i = 0; i < this.n; ++i) {
+  var i = 0;
+  while(i < this.n) {
     var x = getRandomInteger(0, this.w);
     var y = getRandomInteger(0, this.h);
-    this.place(x, y);
+    if(this.map[x][y] !== -1) {
+      this.place(x, y);
+      i += 1;
+    }
   }
 };
