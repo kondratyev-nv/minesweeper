@@ -16,6 +16,7 @@ var minesweeper = new Minesweeper(nx, ny, 10);
 minesweeper.on_tile_open = fillSimpleTile;
 minesweeper.on_mine_open = fillMineTile;
 minesweeper.on_tile_mark = markSimpleTile;
+minesweeper.on_tile_unmark = unmarkSimpleTile;
 minesweeper.on_win = function() { showMessage("You win!"); };
 drawMesh(ctx, canvas.width, canvas.height, (canvas.width / nx), (canvas.height / ny));
 
@@ -65,6 +66,12 @@ function markSimpleTile(x, y) {
   ctx.textBaseline = "middle";
   ctx.clearRect(p.x, p.y, p.w, p.h);
   ctx.fillText("M", p.x + p.w / 2, p.y + p.h / 2);
+  ctx.stroke();
+}
+
+function unmarkSimpleTile(x, y) {
+  var p = getPosition(x, y);
+  ctx.clearRect(p.x, p.y, p.w, p.h);
   ctx.stroke();
 }
 

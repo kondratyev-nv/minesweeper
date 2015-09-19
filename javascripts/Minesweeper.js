@@ -17,6 +17,10 @@ Tile.prototype.mark = function() {
   this.marked = true;
 }
 
+Tile.prototype.unmark = function() {
+  this.marked = false;
+}
+
 function Minesweeper(w, h, n) {
   this.w = w;
   this.h = h;
@@ -64,18 +68,26 @@ Minesweeper.prototype.on_tile_open = function(x, y, value) {
 Minesweeper.prototype.on_tile_mark = function(x, y) {
 };
 
+Minesweeper.prototype.on_tile_unmark = function(x, y) {
+};
+
 Minesweeper.prototype.on_win = function() {
 };
 
 
 Minesweeper.prototype.mark = function(x, y) {
   if (0 <= x && x < this.w && 0 <= y && y < this.h) {
-    if (this.map[x][y].marked === true || this.map[x][y].opened === true) {
+    if (this.map[x][y].opened === true) {
       return;
     }
-    this.map[x][y].mark();
-    this.on_tile_mark(x, y);
-    this.is_complete();
+    if(this.map[x][y].marked === true) {
+      this.map[x][y].unmark();
+      this.on_tile_unmark(x, y);
+    } else {
+      this.map[x][y].mark();
+      this.on_tile_mark(x, y);
+      this.is_complete();  
+    }
   }
 };
 
