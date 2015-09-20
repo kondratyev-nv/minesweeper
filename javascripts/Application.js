@@ -9,13 +9,13 @@ var nx = 10;
 var ny = 10;
 var controller = new MouseControlHandler(canvas, nx, ny);
 var minesweeper = new Minesweeper(nx, ny, 10);
-minesweeper.onTileOpened = onTileOpened;
-minesweeper.onMineFound = onMineFound;
-minesweeper.onMarkTile = onMarkTile;
-minesweeper.onUnmarkTile = onUnmarkTile;
-minesweeper.onWin = function() {
+minesweeper.onMineFound.add(onMineFound, this);
+minesweeper.onTileOpened.add(onTileOpened, this);
+minesweeper.onMarkTile.add(onMarkTile, this);
+minesweeper.onUnmarkTile.add(onUnmarkTile, this);
+minesweeper.onWin.add(function() {
   showMessage("You won!");
-};
+}, this);
 
 controller.openTile.add(minesweeper.open, minesweeper);
 controller.markTile.add(minesweeper.toogleMark, minesweeper);

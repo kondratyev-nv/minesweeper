@@ -24,17 +24,13 @@ function Minesweeper(w, h, n) {
   ];
   this.generate();
   this.marksLeft = n;
+
+  this.onMineFound = new Event();
+  this.onTileOpened = new Event();
+  this.onMarkTile = new Event();
+  this.onUnmarkTile = new Event();
+  this.onWin = new Event();
 }
-
-Minesweeper.prototype.onMineFound = function(x, y) {};
-
-Minesweeper.prototype.onTileOpened = function(x, y, value) {};
-
-Minesweeper.prototype.onMarkTile = function(x, y) {};
-
-Minesweeper.prototype.onUnmarkTile = function(x, y) {};
-
-Minesweeper.prototype.onWin = function() {};
 
 Minesweeper.prototype.getMarkInfo = function() {
   return {
@@ -54,9 +50,9 @@ Minesweeper.prototype.open = function(x, y) {
     }
     var value = this.map[x][y].open();
     if (value === -1) {
-      this.onMineFound(x, y);
+      this.onMineFound.notify(x, y);
     } else {
-      this.onTileOpened(x, y, value);
+      this.onTileOpened.notify(x, y, value);
       if (value === 0) {
         var self = this;
         this.shifts.forEach(function(shift) {
@@ -76,11 +72,11 @@ Minesweeper.prototype.toogleMark = function(x, y) {
     if (this.map[x][y].marked === true) {
       this.map[x][y].unmark();
       this.marksLeft += 1;
-      this.onUnmarkTile(x, y);
+      this.onUnmarkTile.notify(x, y);
     } else if (this.marksLeft > 0) {
       this.map[x][y].mark();
       this.marksLeft -= 1;
-      this.onMarkTile(x, y);
+      this.onMarkTile.notify(x, y);
       this.checkComplete();
     }
   }
@@ -102,7 +98,7 @@ Minesweeper.prototype.checkComplete = function() {
     }
   }
   if (openCount === this.w * this.h - this.n) {
-    this.onWin();
+    this.onWin.notify();
   }
 };
 
