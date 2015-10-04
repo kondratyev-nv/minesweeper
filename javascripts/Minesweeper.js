@@ -31,18 +31,30 @@ function Minesweeper(w, h, n) {
     this.onWin = new Event();
 }
 
-Minesweeper.prototype.getMarkInfo = function () {
+Minesweeper.prototype.getWidth = function() {
+    return this.w;
+};
+
+Minesweeper.prototype.getHeight = function() {
+    return this.h;
+};
+
+Minesweeper.prototype.getTotalMinesCount = function() {
+    return this.n;
+};
+
+Minesweeper.prototype.getMarkInfo = function() {
     return {
         left: this.marksLeft,
         total: this.n
     };
 };
 
-Minesweeper.prototype.canOpen = function (x, y) {
+Minesweeper.prototype.canOpen = function(x, y) {
     return 0 <= x && x < this.w && 0 <= y && y < this.h;
 }
 
-Minesweeper.prototype.open = function (x, y) {
+Minesweeper.prototype.open = function(x, y) {
     if (this.canOpen(x, y)) {
         if (this.map[x][y].opened === true) {
             return;
@@ -54,7 +66,7 @@ Minesweeper.prototype.open = function (x, y) {
             this.onTileOpened.notify(x, y, value);
             if (value === 0) {
                 var self = this;
-                this.shifts.forEach(function (shift) {
+                this.shifts.forEach(function(shift) {
                     self.open(x + shift[0], y + shift[1]);
                 });
             }
@@ -63,7 +75,7 @@ Minesweeper.prototype.open = function (x, y) {
     }
 };
 
-Minesweeper.prototype.toogleMark = function (x, y) {
+Minesweeper.prototype.toogleMark = function(x, y) {
     if (this.canOpen(x, y)) {
         if (this.map[x][y].opened === true) {
             return;
@@ -81,7 +93,7 @@ Minesweeper.prototype.toogleMark = function (x, y) {
     }
 };
 
-Minesweeper.prototype.checkComplete = function () {
+Minesweeper.prototype.checkComplete = function() {
     if (this.marksLeft !== 0) {
         return;
     }
@@ -101,22 +113,22 @@ Minesweeper.prototype.checkComplete = function () {
     }
 };
 
-Minesweeper.prototype.increment = function (x, y) {
+Minesweeper.prototype.increment = function(x, y) {
     if (this.canOpen(x, y) && this.map[x][y].value !== -1) {
         this.map[x][y].value += 1;
     }
 };
 
-Minesweeper.prototype.place = function (x, y) {
+Minesweeper.prototype.place = function(x, y) {
     this.map[x][y].value = -1;
 
     var self = this;
-    this.shifts.forEach(function (shift) {
+    this.shifts.forEach(function(shift) {
         self.increment(x + shift[0], y + shift[1]);
     });
 };
 
-Minesweeper.prototype.generate = function () {
+Minesweeper.prototype.generate = function() {
     var i = 0;
     while (i < this.n) {
         var x = getRandomInteger(0, this.w);

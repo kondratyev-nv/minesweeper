@@ -1,51 +1,42 @@
 <html>
-
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-  <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-
-  <title>Minesweeper by Kondratyev Nikolay</title>
-</head>
-
-<body>
-
-  <header>
-    <div class="container">
-      <h1>Minesweeper</h1>
-      <h2>Minesweeper</h2>
-
-      <section id="downloads">
-        <a href="https://github.com/kondratyev-nv/minesweeper/zipball/master" class="btn">Download as .zip</a>
-        <a href="https://github.com/kondratyev-nv/minesweeper/tarball/master" class="btn">Download as .tar.gz</a>
-        <a href="https://github.com/kondratyev-nv/minesweeper" class="btn btn-github">
-          <span class="icon"></span>View on GitHub</a>
-      </section>
-    </div>
-  </header>
-
-  <div class="container">
-    <section id="main_content">
-      <div style="center bottom no-repeat; height: 25px;">
-        <div id="minesweeper-status" style="text-align:center;">
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+        <title>Minesweeper by Kondratyev Nikolay</title>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>Minesweeper</h1>
+                <h2>Minesweeper</h2>
+                <section id="downloads">
+                    <a href="https://github.com/kondratyev-nv/minesweeper/zipball/master" class="btn">Download as .zip</a>
+                    <a href="https://github.com/kondratyev-nv/minesweeper/tarball/master" class="btn">Download as .tar.gz</a>
+                    <a href="https://github.com/kondratyev-nv/minesweeper" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+                </section>
+            </div>
+        </header>
+        <div class="container">
+            <section id="main_content">
+                <div style="center bottom no-repeat; height: 25px;">
+                    <div id="minesweeper-status" style="text-align:center;">
+                    </div>
+                </div>
+                <canvas id="minesweeper-canvas" width="600" height="600">
+                Sorry, your browser doesn't support the &lt;canvas&gt; element.
+                </canvas>
+            </section>
         </div>
-      </div>
-      <canvas id="minesweeper-canvas" width="600" height="600">
-        Sorry, your browser doesn't support the &lt;canvas&gt; element.
-      </canvas>
-    </section>
-  </div>
-
-  <script src="javascripts/Utilities.js"></script>
-  <script src="javascripts/Event.js"></script>
-  <script src="javascripts/ControlHandler.js"></script>
-  <script src="javascripts/MouseControlHandler.js"></script>
-  <script src="javascripts/Tile.js"></script>
-  <script src="javascripts/Minesweeper.js"></script>
-  <script src="javascripts/Application.js"></script>
-
-</body>
-
+        <script src="javascripts/Utilities.js"></script>
+        <script src="javascripts/Event.js"></script>
+        <script src="javascripts/Tile.js"></script>
+        <script src="javascripts/Minesweeper.js"></script>
+        <script src="javascripts/ControlHandler.js"></script>
+        <script src="javascripts/MouseControlHandler.js"></script>
+        <script src="javascripts/View.js"></script>
+        <script src="javascripts/Application.js"></script>
+        <script src="javascripts/Main.js"></script>
+    </body>
 </html>
