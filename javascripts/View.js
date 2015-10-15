@@ -60,6 +60,11 @@ View.prototype.onMineFound = function(x, y) {
     this.ctx.clearRect(p.x, p.y, p.w, p.h);
     this.ctx.fillRect(p.x, p.y, p.w, p.h);
     this.ctx.stroke();
+    for (var i = 0; i < this.minesweeper.getWidth(); ++i) {
+        for (var j = 0; j < this.minesweeper.getHeight(); ++j) {
+            this.minesweeper.open(i, j);
+        }
+    }
     this.showMessage("You lost!");
 };
 
