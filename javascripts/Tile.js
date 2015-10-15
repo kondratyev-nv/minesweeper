@@ -12,10 +12,18 @@ Tile.prototype.open = function () {
     return this.value;
 }
 
+Tile.prototype.isOpened = function () {
+    return this.opened;
+}
+
 Tile.prototype.mark = function () {
     this.marked = true;
 }
 
 Tile.prototype.unmark = function () {
     this.marked = false;
+}
+
+Tile.prototype.isMarked = function () {
+    return this.marked;
 }

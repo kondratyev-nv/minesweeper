@@ -56,7 +56,7 @@ Minesweeper.prototype.canOpen = function(x, y) {
 
 Minesweeper.prototype.open = function(x, y) {
     if (this.canOpen(x, y)) {
-        if (this.map[x][y].opened === true) {
+        if (this.map[x][y].isOpened() === true) {
             return;
         }
         var value = this.map[x][y].open();
@@ -77,10 +77,10 @@ Minesweeper.prototype.open = function(x, y) {
 
 Minesweeper.prototype.toogleMark = function(x, y) {
     if (this.canOpen(x, y)) {
-        if (this.map[x][y].opened === true) {
+        if (this.map[x][y].isOpened() === true) {
             return;
         }
-        if (this.map[x][y].marked === true) {
+        if (this.map[x][y].isMarked() === true) {
             this.map[x][y].unmark();
             this.marksLeft += 1;
             this.onUnmarkTile.notify(x, y);
@@ -100,10 +100,10 @@ Minesweeper.prototype.checkComplete = function() {
     var openCount = 0;
     for (var i = 0; i < this.w; ++i) {
         for (var j = 0; j < this.h; ++j) {
-            if (this.map[i][j].marked === true && this.map[i][j].value !== -1) {
+            if (this.map[i][j].isMarked() === true && this.map[i][j].value !== -1) {
                 return;
             }
-            if (this.map[i][j].opened === true) {
+            if (this.map[i][j].isOpened() === true) {
                 openCount++;
             }
         }
