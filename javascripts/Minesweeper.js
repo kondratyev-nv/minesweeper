@@ -24,11 +24,11 @@ function Minesweeper(w, h, n) {
     this.generate();
     this.marksLeft = n;
 
-    this.onMineFound = new Event();
-    this.onTileOpened = new Event();
-    this.onMarkTile = new Event();
-    this.onUnmarkTile = new Event();
-    this.onWin = new Event();
+    this.onMineFound = Event();
+    this.onTileOpened = Event();
+    this.onMarkTile = Event();
+    this.onUnmarkTile = Event();
+    this.onWin = Event();
 }
 
 Minesweeper.prototype.getWidth = function() {

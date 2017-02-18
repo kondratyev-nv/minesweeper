@@ -11,3 +11,5 @@ function Application(w, h, n) {
 
     var view = new View(canvas, document.getElementById('minesweeper-status'), minesweeper);
 }
+
+var application = new Application(10, 10, 10);
