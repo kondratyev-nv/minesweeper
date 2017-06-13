@@ -1,4 +1,4 @@
-var Event = (function () {
+function Event() {
     'use strict';
 
     var listeners = [];
@@ -27,4 +27,4 @@ var Event = (function () {
             }
         }
     };
-});
+}

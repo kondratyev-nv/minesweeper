@@ -1,14 +1,14 @@
 'use strict';
 
-function Minesweeper(w, h, n) {
-    this.w = w;
-    this.h = h;
-    this.n = n;
+function Minesweeper(width, height, numberOfMines) {
+    this.width = width;
+    this.height = height;
+    this.numberOfMines = numberOfMines;
     this.map = [];
-    for (var i = 0; i < w; ++i) {
+    for (var i = 0; i < width; ++i) {
         this.map[i] = [];
-        for (var j = 0; j < h; ++j) {
-            this.map[i][j] = new Tile();
+        for (var j = 0; j < height; ++j) {
+            this.map[i][j] = Tile(0);
         }
     }
     this.shifts = [
@@ -22,7 +22,7 @@ function Minesweeper(w, h, n) {
         [1, 1]
     ];
     this.generate();
-    this.marksLeft = n;
+    this.marksLeft = numberOfMines;
 
     this.onMineFound = Event();
     this.onTileOpened = Event();
@@ -31,30 +31,30 @@ function Minesweeper(w, h, n) {
     this.onWin = Event();
 }
 
-Minesweeper.prototype.getWidth = function() {
-    return this.w;
+Minesweeper.prototype.getWidth = function () {
+    return this.width;
 };
 
-Minesweeper.prototype.getHeight = function() {
-    return this.h;
+Minesweeper.prototype.getHeight = function () {
+    return this.height;
 };
 
-Minesweeper.prototype.getTotalMinesCount = function() {
-    return this.n;
+Minesweeper.prototype.getTotalMinesCount = function () {
+    return this.numberOfMines;
 };
 
-Minesweeper.prototype.getMarkInfo = function() {
+Minesweeper.prototype.getMarkInfo = function () {
     return {
         left: this.marksLeft,
-        total: this.n
+        total: this.numberOfMines
     };
 };
 
-Minesweeper.prototype.canOpen = function(x, y) {
-    return 0 <= x && x < this.w && 0 <= y && y < this.h;
+Minesweeper.prototype.canOpen = function (x, y) {
+    return 0 <= x && x < this.width && 0 <= y && y < this.height;
 }
 
-Minesweeper.prototype.open = function(x, y) {
+Minesweeper.prototype.open = function (x, y) {
     if (this.canOpen(x, y)) {
         if (this.map[x][y].isOpened() === true) {
             return;
@@ -66,7 +66,7 @@ Minesweeper.prototype.open = function(x, y) {
             this.onTileOpened.notify(x, y, value);
             if (value === 0) {
                 var self = this;
-                this.shifts.forEach(function(shift) {
+                this.shifts.forEach(function (shift) {
                     self.open(x + shift[0], y + shift[1]);
                 });
             }
@@ -75,7 +75,7 @@ Minesweeper.prototype.open = function(x, y) {
     }
 };
 
-Minesweeper.prototype.toogleMark = function(x, y) {
+Minesweeper.prototype.toggleMark = function (x, y) {
     if (this.canOpen(x, y)) {
         if (this.map[x][y].isOpened() === true) {
             return;
@@ -93,13 +93,13 @@ Minesweeper.prototype.toogleMark = function(x, y) {
     }
 };
 
-Minesweeper.prototype.checkComplete = function() {
+Minesweeper.prototype.checkComplete = function () {
     if (this.marksLeft !== 0) {
         return;
     }
     var openCount = 0;
-    for (var i = 0; i < this.w; ++i) {
-        for (var j = 0; j < this.h; ++j) {
+    for (var i = 0; i < this.width; ++i) {
+        for (var j = 0; j < this.height; ++j) {
             if (this.map[i][j].isMarked() === true && this.map[i][j].value !== -1) {
                 return;
             }
@@ -108,31 +108,31 @@ Minesweeper.prototype.checkComplete = function() {
             }
         }
     }
-    if (openCount === this.w * this.h - this.n) {
+    if (openCount === this.width * this.height - this.numberOfMines) {
         this.onWin.notify();
     }
 };
 
-Minesweeper.prototype.increment = function(x, y) {
+Minesweeper.prototype.increment = function (x, y) {
     if (this.canOpen(x, y) && this.map[x][y].value !== -1) {
         this.map[x][y].value += 1;
     }
 };
 
-Minesweeper.prototype.place = function(x, y) {
+Minesweeper.prototype.place = function (x, y) {
     this.map[x][y].value = -1;
 
     var self = this;
-    this.shifts.forEach(function(shift) {
+    this.shifts.forEach(function (shift) {
         self.increment(x + shift[0], y + shift[1]);
     });
 };
 
-Minesweeper.prototype.generate = function() {
+Minesweeper.prototype.generate = function () {
     var i = 0;
-    while (i < this.n) {
-        var x = getRandomInteger(0, this.w);
-        var y = getRandomInteger(0, this.h);
+    while (i < this.numberOfMines) {
+        var x = getRandomInteger(0, this.width);
+        var y = getRandomInteger(0, this.height);
         if (this.map[x][y].value !== -1) {
             this.place(x, y);
             i += 1;

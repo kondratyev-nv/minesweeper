@@ -1,8 +1,8 @@
 'use strict';
 
 function ControlHandler() {
-    this.openTile = new Event();
-    this.markTile = new Event();
+    this.openTile = Event();
+    this.markTile = Event();
 }
 
 ControlHandler.prototype = {

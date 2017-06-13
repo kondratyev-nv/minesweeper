@@ -1,29 +1,26 @@
 'use strict';
 
-function Tile() {
-    this.value = 0;
-    this.marked = false;
-    this.opened = false;
-}
-
-Tile.prototype.open = function () {
-    this.marked = false;
-    this.opened = true;
-    return this.value;
-}
-
-Tile.prototype.isOpened = function () {
-    return this.opened;
-}
-
-Tile.prototype.mark = function () {
-    this.marked = true;
-}
-
-Tile.prototype.unmark = function () {
-    this.marked = false;
-}
-
-Tile.prototype.isMarked = function () {
-    return this.marked;
+function Tile(value) {
+    var marked = false;
+    var opened = false;
+    return {
+        value: value,
+        open: function () {
+            marked = false;
+            opened = true;
+            return this.value;
+        },
+        isOpened: function () {
+            return opened;
+        },
+        mark: function () {
+            marked = true;
+        },
+        unmark: function () {
+            marked = false;
+        },
+        isMarked: function () {
+            return marked;
+        }
+    };
 }

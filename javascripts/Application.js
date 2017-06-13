@@ -1,15 +1,13 @@
 'use strict';
 
-function Application(w, h, n) {
+(function (fieldWidth, fieldHeight, numberOfMines) {
     var canvas = document.getElementById('minesweeper-canvas');
 
-    var minesweeper = new Minesweeper(w, h, n);
+    var minesweeper = new Minesweeper(fieldWidth, fieldHeight, numberOfMines);
 
-    var controller = new MouseControlHandler(canvas, w, h);
+    var controller = new MouseControlHandler(canvas, fieldWidth, fieldHeight);
     controller.openTile.add(minesweeper.open, minesweeper);
-    controller.markTile.add(minesweeper.toogleMark, minesweeper);
+    controller.markTile.add(minesweeper.toggleMark, minesweeper);
 
     var view = new View(canvas, document.getElementById('minesweeper-status'), minesweeper);
-}
-
-var application = new Application(10, 10, 10);
+}(10, 10, 10));
