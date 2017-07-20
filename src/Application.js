@@ -1,5 +1,9 @@
 'use strict';
 
+var Minesweeper = require('./js/Minesweeper.js');
+var MouseControlHandler = require('./js/MouseControlHandler.js');
+var View = require('./js/View.js');
+
 (function (fieldWidth, fieldHeight, numberOfMines) {
     var canvas = document.getElementById('minesweeper-canvas');
 

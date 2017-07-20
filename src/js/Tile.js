@@ -1,6 +1,6 @@
 'use strict';
 
-function Tile(value) {
+module.exports = function (value) {
     var marked = false;
     var opened = false;
     return {
@@ -23,4 +23,4 @@ function Tile(value) {
             return marked;
         }
     };
-}
+};

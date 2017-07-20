@@ -1,5 +1,9 @@
 'use strict';
 
+var Tile = require('./Tile.js');
+var Event = require('./Event.js');
+var Utilities = require('./Utilities.js');
+
 function Minesweeper(width, height, numberOfMines) {
     this.width = width;
     this.height = height;
@@ -131,11 +135,13 @@ Minesweeper.prototype.place = function (x, y) {
 Minesweeper.prototype.generate = function () {
     var i = 0;
     while (i < this.numberOfMines) {
-        var x = getRandomInteger(0, this.width);
-        var y = getRandomInteger(0, this.height);
+        var x = Utilities.getRandomInteger(0, this.width);
+        var y = Utilities.getRandomInteger(0, this.height);
         if (this.map[x][y].value !== -1) {
             this.place(x, y);
             i += 1;
         }
     }
 };
+
+module.exports = Minesweeper;

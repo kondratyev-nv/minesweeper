@@ -1,4 +1,5 @@
-function Event() {
+
+module.exports = function () {
     'use strict';
 
     var listeners = [];
@@ -27,4 +28,4 @@ function Event() {
             }
         }
     };
-}
+};
