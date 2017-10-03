@@ -15,7 +15,8 @@ function View(canvas, status_div, minesweeper) {
     minesweeper.onWin.add(function () {
         this.showMessage("You won!");
     }, this);
-    this.drawMesh(this.ctx, this.canvas.width, this.canvas.height, (this.canvas.width / this.w), (this.canvas.height / this.h));
+    this.drawMesh(this.ctx, this.canvas.width, this.canvas.height, 
+        (this.canvas.width / this.w), (this.canvas.height / this.h));
 };
 
 View.prototype.showMessage = function (message) {

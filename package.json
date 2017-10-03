@@ -2,11 +2,11 @@
   "name": "minesweeper",
   "version": "0.0.2",
   "description": "Minesweeper game",
-  "main": "index.js",
+  "main": "Application.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "webpack –watch"
+    "start": "webpack --watch"
   },
   "repository": {
     "type": "git",

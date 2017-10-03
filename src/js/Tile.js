@@ -1,9 +1,11 @@
 'use strict';
 
-module.exports = function (value) {
+module.exports = function (x, y, value) {
     var marked = false;
     var opened = false;
     return {
+        x: x,
+        y: y,
         value: value,
         open: function () {
             marked = false;
