@@ -4,3 +4,10 @@ node_js: lts/*
 cache:
   directories:
     - "node_modules"
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist
+  on:
+    branch: master
