@@ -1,0 +1,31 @@
+{
+  "name": "minesweeper",
+  "version": "0.0.2",
+  "description": "Minesweeper game",
+  "main": "Application.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build": "webpack",
+    "start": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kondratyev-nv/minesweeper.git"
+  },
+  "keywords": [
+    "javascript",
+    "minesweeper",
+    "ghpages",
+    "browser-game"
+  ],
+  "author": "Nikolay Kondratyev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kondratyev-nv/minesweeper/issues"
+  },
+  "homepage": "https://github.com/kondratyev-nv/minesweeper#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.1.1",
+    "webpack": "^3.3.0"
+  }
+}

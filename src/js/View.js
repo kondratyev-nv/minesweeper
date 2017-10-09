@@ -12,22 +12,23 @@ function View(canvas, status_div, minesweeper) {
     minesweeper.onTileOpened.add(this.onTileOpened, this);
     minesweeper.onMarkTile.add(this.onMarkTile, this);
     minesweeper.onUnmarkTile.add(this.onUnmarkTile, this);
-    minesweeper.onWin.add(function() {
+    minesweeper.onWin.add(function () {
         this.showMessage("You won!");
     }, this);
-    this.drawMesh(this.ctx, this.canvas.width, this.canvas.height, (this.canvas.width / this.w), (this.canvas.height / this.h));
+    this.drawMesh(this.ctx, this.canvas.width, this.canvas.height, 
+        (this.canvas.width / this.w), (this.canvas.height / this.h));
 };
 
-View.prototype.showMessage = function(message) {
+View.prototype.showMessage = function (message) {
     this.status_div.innerHTML = message;
 };
 
-View.prototype.showMarkInfo = function() {
+View.prototype.showMarkInfo = function () {
     var markInfo = this.minesweeper.getMarkInfo();
     this.showMessage("Marks left: " + markInfo.left + " of " + markInfo.total);
 };
 
-View.prototype.drawMesh = function(ctx, w, h, hx, hy) {
+View.prototype.drawMesh = function (ctx, w, h, hx, hy) {
     this.ctx.strokeStyle = "#b5e853";
     for (var x = 0; x <= w; x += hx) {
         this.ctx.moveTo(x, 0);
@@ -41,7 +42,7 @@ View.prototype.drawMesh = function(ctx, w, h, hx, hy) {
     this.showMarkInfo();
 };
 
-View.prototype.getPosition = function(x, y) {
+View.prototype.getPosition = function (x, y) {
     var W = (this.canvas.width / this.w);
     var H = (this.canvas.height / this.h);
     var X = x * W;
@@ -54,7 +55,7 @@ View.prototype.getPosition = function(x, y) {
     };
 };
 
-View.prototype.onMineFound = function(x, y) {
+View.prototype.onMineFound = function (x, y) {
     var p = this.getPosition(x, y);
     this.ctx.fillStyle = "#ff0000";
     this.ctx.clearRect(p.x, p.y, p.w, p.h);
@@ -68,7 +69,7 @@ View.prototype.onMineFound = function(x, y) {
     this.showMessage("You lost!");
 };
 
-View.prototype.onTileOpened = function(x, y, value) {
+View.prototype.onTileOpened = function (x, y, value) {
     var p = this.getPosition(x, y);
     this.ctx.fillStyle = "#b5e853";
     this.ctx.font = "20pt Lucida Console";
@@ -79,7 +80,7 @@ View.prototype.onTileOpened = function(x, y, value) {
     this.ctx.stroke();
 };
 
-View.prototype.onMarkTile = function(x, y) {
+View.prototype.onMarkTile = function (x, y) {
     var p = this.getPosition(x, y);
     this.ctx.fillStyle = "#ff0000";
     this.ctx.font = "bold 24pt Lucida Console";
@@ -91,9 +92,11 @@ View.prototype.onMarkTile = function(x, y) {
     this.showMarkInfo();
 };
 
-View.prototype.onUnmarkTile = function(x, y) {
+View.prototype.onUnmarkTile = function (x, y) {
     var p = this.getPosition(x, y);
     this.ctx.clearRect(p.x, p.y, p.w, p.h);
     this.ctx.stroke();
     this.showMarkInfo();
 };
+
+module.exports = View;

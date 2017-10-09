@@ -1,9 +1,11 @@
 'use strict';
 
-function Tile(value) {
+module.exports = function (x, y, value) {
     var marked = false;
     var opened = false;
     return {
+        x: x,
+        y: y,
         value: value,
         open: function () {
             marked = false;
@@ -23,4 +25,4 @@ function Tile(value) {
             return marked;
         }
     };
-}
+};
