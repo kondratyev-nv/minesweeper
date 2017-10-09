@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "webpack",
-    "start": "webpack --watch"
+    "start": "webpack --watch",
+    "clean": "rimraf dist/*"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,11 @@
   },
   "homepage": "https://github.com/kondratyev-nv/minesweeper#readme",
   "devDependencies": {
+    "chai": "^4.1.2",
     "copy-webpack-plugin": "^4.1.1",
-    "webpack": "^3.3.0"
+    "mocha": "^4.0.1",
+    "mocha-webpack": "^0.7.0",
+    "rimraf": "^2.6.2",
+    "webpack": "^3.6.0"
   }
 }

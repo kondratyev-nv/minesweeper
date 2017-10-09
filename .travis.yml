@@ -4,10 +4,12 @@ node_js: lts/*
 cache:
   directories:
     - "node_modules"
+before_script:
+  - npm run build
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: dist
+  local_dir: $TRAVIS_BUILD_DIR/dist
   on:
     branch: master
