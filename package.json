@@ -4,7 +4,7 @@
   "description": "Minesweeper game",
   "main": "Application.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
     "build": "webpack",
     "start": "webpack --watch",
     "clean": "rimraf dist/*"

@@ -1,5 +1,5 @@
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-const path = require('path');
+var path = require('path');
 
 module.exports = {
     entry: './src/Application.js',
