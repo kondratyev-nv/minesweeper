@@ -54,10 +54,9 @@ Minesweeper.prototype.open = function (x, y) {
         } else {
             this.onTileOpened.notify(x, y, value);
             if (value === 0) {
-                var self = this;
-                this.field.getNeightboursOf(x, y).forEach(function (neighbour) {
-                    self.open(neighbour.x, neighbour.y);
-                });
+                this.field.getNeightboursOf(x, y)
+                    .filter(neighbour => !neighbour.isMarked())
+                    .forEach(neighbour => this.open(neighbour.x, neighbour.y));
             }
         }
         this.checkComplete();

@@ -52,11 +52,8 @@ module.exports = function (width, height, numberOfMines, randomIntegerProvider) 
             return map[x][y];
         },
         getNeightboursOf: function (x, y) {
-            return shifts.filter(function (shift) {
-                return canOpen(x + shift[0], y + shift[1]);
-            }).map(function (shift) {
-                return map[x + shift[0]][y + shift[1]];
-            });
+            return shifts.filter(shift => canOpen(x + shift[0], y + shift[1]))
+                .map(shift => map[x + shift[0]][y + shift[1]]);
         },
         width: function () {
             return width;
