@@ -46,6 +46,11 @@ Minesweeper.prototype.open = function (x, y) {
         var value = this.field.at(x, y).open();
         if (value < 0) {
             this.onMineFound.notify(x, y);
+            for (var i = 0; i < this.getWidth(); ++i) {
+                for (var j = 0; j < this.getHeight(); ++j) {
+                    this.open(i, j);
+                }
+            }
         } else {
             this.onTileOpened.notify(x, y, value);
             if (value === 0) {
