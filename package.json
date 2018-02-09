@@ -5,8 +5,9 @@
   "main": "Application.js",
   "scripts": {
     "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
+    "watch_test": "mocha-webpack --watch --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
     "build": "webpack",
-    "start": "webpack --watch",
+    "watch_buid": "webpack --watch",
     "clean": "rimraf dist/*"
   },
   "repository": {

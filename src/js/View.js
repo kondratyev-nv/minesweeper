@@ -5,8 +5,8 @@ function View(canvas, statusText, minesweeper) {
     this.statusText = statusText;
     this.ctx = canvas.getContext('2d');
     this.minesweeper = minesweeper;
-    this.w = minesweeper.getWidth();
-    this.h = minesweeper.getHeight();
+    this.w = minesweeper.width();
+    this.h = minesweeper.height();
     this.n = minesweeper.getTotalMinesCount();
     minesweeper.onMineFound.add((x, y) => this.onMineFound(x, y));
     minesweeper.onTileOpened.add((x, y, v) => this.fillTile(x, y, v, "#b5e853"));
