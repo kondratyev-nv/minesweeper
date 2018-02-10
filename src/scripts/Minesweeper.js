@@ -15,11 +15,11 @@ function Minesweeper(field) {
     this.onWin = Event();
 };
 
-Minesweeper.prototype.getWidth = function () {
+Minesweeper.prototype.width = function () {
     return this.field.width();
 };
 
-Minesweeper.prototype.getHeight = function () {
+Minesweeper.prototype.height = function () {
     return this.field.height();
 };
 
@@ -35,7 +35,7 @@ Minesweeper.prototype.getMarkInfo = function () {
 };
 
 Minesweeper.prototype.canOpen = function (x, y) {
-    return 0 <= x && x < this.getWidth() && 0 <= y && y < this.getHeight();
+    return 0 <= x && x < this.width() && 0 <= y && y < this.height();
 };
 
 Minesweeper.prototype.open = function (x, y) {
@@ -46,13 +46,17 @@ Minesweeper.prototype.open = function (x, y) {
         var value = this.field.at(x, y).open();
         if (value < 0) {
             this.onMineFound.notify(x, y);
+            for (var i = 0; i < this.height(); ++i) {
+                for (var j = 0; j < this.width(); ++j) {
+                    this.open(j, i);
+                }
+            }
         } else {
             this.onTileOpened.notify(x, y, value);
             if (value === 0) {
-                var self = this;
-                this.field.getNeightboursOf(x, y).forEach(function (neighbour) {
-                    self.open(neighbour.x, neighbour.y);
-                });
+                this.field.getNeightboursOf(x, y)
+                    .filter(neighbour => !neighbour.isMarked())
+                    .forEach(neighbour => this.open(neighbour.x, neighbour.y));
             }
         }
         this.checkComplete();
@@ -83,8 +87,8 @@ Minesweeper.prototype.checkComplete = function () {
         return;
     }
     var openCount = 0;
-    for (var x = 0; x < this.getWidth(); ++x) {
-        for (var y = 0; y < this.getHeight(); ++y) {
+    for (var x = 0; x < this.width(); ++x) {
+        for (var y = 0; y < this.height(); ++y) {
             if (this.field.at(x, y).isMarked() && this.field.at(x, y).value >= 0) {
                 return;
             }
@@ -93,7 +97,7 @@ Minesweeper.prototype.checkComplete = function () {
             }
         }
     }
-    if (openCount === this.getWidth() * this.getHeight() - this.getTotalMinesCount()) {
+    if (openCount === this.width() * this.height() - this.getTotalMinesCount()) {
         this.onWin.notify();
     }
 };

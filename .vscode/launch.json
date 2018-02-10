@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha-webpack/bin/mocha-webpack",
+            "args": [
+                "--webpack-config",
+                "${workspaceFolder}/webpack.test.config.js",
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "--require",
+                "source-map-support/register",
+                "${workspaceFolder}/test/**/*Test.js"
+            ],
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "runtimeArgs": [
+                "--inspect-brk"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
