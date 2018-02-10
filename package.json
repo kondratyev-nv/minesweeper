@@ -5,10 +5,18 @@
   "main": "Application.js",
   "scripts": {
     "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
+    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
     "watch_test": "mocha-webpack --watch --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
     "build": "webpack",
     "watch_buid": "webpack --watch",
     "clean": "rimraf dist/*"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "instrument": false,
+    "sourceMap": false
   },
   "repository": {
     "type": "git",
@@ -29,9 +37,13 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "copy-webpack-plugin": "^4.1.1",
-    "mocha": "^4.0.1",
-    "mocha-webpack": "^0.7.0",
+    "cross-env": "^5.1.3",
+    "istanbul-instrumenter-loader": "^3.0.0",
+    "mocha": "^5.0.0",
+    "mocha-webpack": "^1.0.1",
+    "nyc": "^11.4.1",
     "rimraf": "^2.6.2",
-    "webpack": "^3.6.0"
+    "webpack": "^3.10.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }
