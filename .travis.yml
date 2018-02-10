@@ -8,8 +8,9 @@ before_script:
   - npm run build
 deploy:
   provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: $TRAVIS_BUILD_DIR/dist
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local-dir: dist
+  keep-history: true
   on:
     branch: master
