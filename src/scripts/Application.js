@@ -1,10 +1,12 @@
 'use strict';
 
-var Field = require('./js/Field.js');
-var Minesweeper = require('./js/Minesweeper.js');
-var MouseControlHandler = require('./js/MouseControlHandler.js');
-var View = require('./js/View.js');
-var Utilities = require('./js/Utilities.js');
+require("../styles/stylesheet.css");
+
+var Field = require('./Field.js');
+var Minesweeper = require('./Minesweeper.js');
+var MouseControlHandler = require('./MouseControlHandler.js');
+var View = require('./View.js');
+var Utilities = require('./Utilities.js');
 
 (function (width, height, numberOfMines) {
     var canvas = document.getElementById('minesweeper-canvas');
