@@ -2,14 +2,12 @@
   "name": "minesweeper",
   "version": "0.0.3",
   "description": "Minesweeper game",
-  "main": "Application.js",
   "scripts": {
     "test": "mocha-webpack --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
-    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
-    "watch_test": "mocha-webpack --watch --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
-    "build": "webpack -p",
-    "watch_buid": "webpack --watch",
-    "clean": "rimraf dist/*"
+    "start": "webpack-dev-server -p --config webpack.config.js --open",
+    "watch-test": "mocha-webpack --watch --webpack-config webpack.test.config.js \"test/**/*Test.js\"",
+    "coverage": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
+    "dist": "webpack -p"
   },
   "nyc": {
     "include": [
@@ -33,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/kondratyev-nv/minesweeper/issues"
   },
-  "homepage": "https://github.com/kondratyev-nv/minesweeper#readme",
+  "homepage": "https://github.com/kondratyev-nv/minesweeper",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -50,9 +48,9 @@
     "mocha": "^4.1.0",
     "mocha-webpack": "^1.0.1",
     "nyc": "^11.4.1",
-    "rimraf": "^2.6.2",
     "style-loader": "^0.20.1",
-    "webpack": "^3.10.0",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1",
     "webpack-node-externals": "^1.6.0"
   }
 }
