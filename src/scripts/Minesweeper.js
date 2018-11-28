@@ -1,8 +1,6 @@
 'use strict';
 
-var Tile = require('./Tile.js');
 var Event = require('./Event.js');
-var Utilities = require('./Utilities.js');
 
 function Minesweeper(field) {
     this.field = field;
@@ -54,9 +52,9 @@ Minesweeper.prototype.open = function (x, y) {
         } else {
             this.onTileOpened.notify(x, y, value);
             if (value === 0) {
-                this.field.getNeightboursOf(x, y)
-                    .filter(neighbour => !neighbour.isMarked())
-                    .forEach(neighbour => this.open(neighbour.x, neighbour.y));
+                this.field.getNeighborsOf(x, y)
+                    .filter(neighbor => !neighbor.isMarked())
+                    .forEach(neighbor => this.open(neighbor.x, neighbor.y));
             }
         }
         this.checkComplete();
