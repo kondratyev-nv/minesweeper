@@ -8,12 +8,14 @@ function View(canvas, statusText, minesweeper) {
     this.w = minesweeper.width();
     this.h = minesweeper.height();
     this.n = minesweeper.getTotalMinesCount();
+    
     minesweeper.onMineFound.add((x, y) => this.onMineFound(x, y));
     minesweeper.onTileOpened.add((x, y, v) => this.fillTile(x, y, v, "#b5e853"));
-    minesweeper.onMarkTile.add((x, y) => this.fillTile(x, y, "M", "#ff0000"));
+    minesweeper.onMarkTile.add((x, y) => this.fillTile(x, y, "📍"));
     minesweeper.onUnmarkTile.add((x, y) => this.clearTile(x, y));
-    minesweeper.onWin.add(() => this.showMessage("You won!"));
-    this.drawMesh(this.ctx, this.canvas.width, this.canvas.height,
+    minesweeper.onWin.add(() => this.showMessage("You won! 🎉"));
+    
+    this.drawMesh(this.canvas.width, this.canvas.height,
         (this.canvas.width / this.w), (this.canvas.height / this.h));
 };
 
@@ -26,8 +28,9 @@ View.prototype.showMarkInfo = function () {
     this.showMessage("Marks left: " + markInfo.left + " of " + markInfo.total);
 };
 
-View.prototype.drawMesh = function (ctx, w, h, hx, hy) {
+View.prototype.drawMesh = function (w, h, hx, hy) {
     this.ctx.strokeStyle = "#b5e853";
+    this.ctx.lineWidth = 2;
     for (var x = 0; x <= w; x += hx) {
         this.ctx.moveTo(x, 0);
         this.ctx.lineTo(x, h);
@@ -52,15 +55,11 @@ View.prototype.getPosition = function (x, y) {
 };
 
 View.prototype.onMineFound = function (x, y) {
-    var p = this.getPosition(x, y);
-    this.ctx.fillStyle = "#ff0000";
-    this.ctx.clearRect(p.x, p.y, p.w, p.h);
-    this.ctx.fillRect(p.x, p.y, p.w, p.h);
-    this.ctx.stroke();
+    this.fillTile(x, y, "💥");
     this.showMessage("You lost!");
 };
 
-View.prototype.fillTile = function (x, y, value, color) {
+View.prototype.fillTile = function (x, y, value, color = "#000000") {
     var p = this.getPosition(x, y);
     this.ctx.fillStyle = color;
     this.ctx.font = "bold 30px Monaco, \"Bitstream Vera Sans Mono\", \"Lucida Console\", Terminal, monospace";

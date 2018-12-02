@@ -47,7 +47,7 @@ module.exports = function (width, height, numberOfMines, randomIntegerProvider) 
         at: function (x, y) {
             return map[y][x];
         },
-        getNeightboursOf: function (x, y) {
+        getNeighborsOf: function (x, y) {
             return shifts.filter(shift => canOpen(x + shift[0], y + shift[1]))
                 .map(shift => map[y + shift[1]][x + shift[0]]);
         },
