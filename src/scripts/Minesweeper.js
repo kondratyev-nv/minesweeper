@@ -47,6 +47,7 @@ Minesweeper.prototype.open = function (x, y) {
     if (this.field.at(x, y).isOpened()) {
         return;
     }
+    this.unmarkTile(x, y);
     var value = this.field.at(x, y).open();
     if (value < 0) {
         this.onMineFound.notify(x, y);
@@ -77,15 +78,22 @@ Minesweeper.prototype.toggleMark = function (x, y) {
         return;
     }
     if (this.field.at(x, y).isMarked()) {
-        this.field.at(x, y).unmark();
-        this.marksLeft += 1;
-        this.onUnmarkTile.notify(x, y);
+        this.unmarkTile(x, y);
     } else if (this.marksLeft > 0) {
         this.field.at(x, y).mark();
         this.marksLeft -= 1;
         this.onMarkTile.notify(x, y);
         this.checkComplete();
     }
+};
+
+Minesweeper.prototype.unmarkTile = function (x, y) {
+    if (!this.field.at(x, y).isMarked()) {
+        return;
+    }
+    this.field.at(x, y).unmark();
+    this.marksLeft += 1;
+    this.onUnmarkTile.notify(x, y);
 };
 
 Minesweeper.prototype.checkComplete = function () {
