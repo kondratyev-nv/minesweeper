@@ -8,11 +8,11 @@ function MouseControlHandler(canvas, nx, ny) {
     this.ny = ny;
     this.cw = this.canvas.clientWidth;
     this.ch = this.canvas.clientHeight;
-    this.canvas.addEventListener('click', this.onLeftButtonClick.bind(this), false);
-    this.canvas.addEventListener('contextmenu', function (event) {
+    this.canvas.addEventListener('click', event => this.onLeftButtonClick(event), false);
+    this.canvas.addEventListener('contextmenu', event => {
         event.preventDefault();
         this.onRightButtonClick(event);
-    }.bind(this), false);
+    }, false);
 }
 
 MouseControlHandler.prototype = new ControlHandler();
