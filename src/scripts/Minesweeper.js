@@ -50,12 +50,12 @@ Minesweeper.prototype.open = function (x, y) {
     this.unmarkTile(x, y);
     var value = this.field.at(x, y).open();
     if (value < 0) {
-        this.onMineFound.notify(x, y);
         for (var i = 0; i < this.height(); ++i) {
             for (var j = 0; j < this.width(); ++j) {
                 this.open(j, i);
             }
         }
+        this.onMineFound.notify(x, y);
     } else {
         this.onTileOpened.notify(x, y, value);
         if (value === 0) {
